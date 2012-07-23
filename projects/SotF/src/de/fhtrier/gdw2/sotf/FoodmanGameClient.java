@@ -1,16 +1,12 @@
 package de.fhtrier.gdw2.sotf;
 
-import java.io.FileNotFoundException;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.fhtrier.gdw2.sotf.gamestates.PlayingState;
-import de.fhtrier.gdw2.sotf.impl.World;
 import de.fhtrier.gdw2.sotf.interfaces.IEntity;
-import de.fhtrier.gdw2.sotf.interfaces.IWorld;
 import de.fhtrier.gdw2.sotf.network.ClientNetworkComp;
 import de.fhtrier.gdw2.sotf.network.INetworkComp;
 import de.fhtrier.gdw2.sotf.network.WorldState;
@@ -32,8 +28,6 @@ public class FoodmanGameClient extends StateBasedGame {
 	        }		
 	}
 	
-	private String tiledFile;
-	private IWorld world;
 	private IEntity entity;
 	
 	public FoodmanGameClient() {
@@ -52,18 +46,11 @@ public class FoodmanGameClient extends StateBasedGame {
 	
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		tiledFile = "C:\\Projects\\GDW2\\assets\\testMap.tmx";
 
-		try {
-			WorldState worldState = new WorldState(container);
-			network = new ClientNetworkComp(worldState, "localhost", 49999);
-			world = new World(tiledFile);
-			entity = worldState.entity;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
-		addState(new PlayingState(world, entity));
+		WorldState worldState = new WorldState(container);
+		network = new ClientNetworkComp(worldState, "143.93.55.178", 49999);
+		entity = worldState.entity;
+
+		addState(new PlayingState(entity));
 	}
 }
