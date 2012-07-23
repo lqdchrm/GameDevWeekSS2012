@@ -52,7 +52,6 @@ public class ClientNetworkComp implements INetworkComp {
 		d.y = world.entity.position.y;
 		
 		client.outgoingMessages.add(d);
-		System.out.println("Client: send " + client.outgoingMessages.size() + " messages");
 		client.sendPendingMessages();	
 	}
 }

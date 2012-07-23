@@ -41,7 +41,6 @@ public class ServerNetworkComp implements INetworkComp {
 	public void handleOutgoing() {
 		for(ClientHandler ch : server.clientHandlers) {
 			sendPlayerPosition(ch);
-			System.out.println("Server: send " + ch.outgoingMessages.size() + " messages");
 			ch.sendPendingMessages();
 		}
 	}
