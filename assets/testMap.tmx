@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="12" height="37" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="set_cave" tilewidth="32" tileheight="32">
+  <image source="set_cave.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="65" name="cave" tilewidth="32" tileheight="32">
+  <image source="cave.png" width="512" height="256"/>
+ </tileset>
+ <tileset firstgid="193" name="collision" tilewidth="32" tileheight="32">
+  <image source="collision.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="195" name="cave_x2" tilewidth="32" tileheight="64">
+  <image source="cave_x2.png" width="512" height="64"/>
+ </tileset>
+ <tileset firstgid="211" name="set_rules" tilewidth="32" tileheight="32">
+  <image source="set_rules.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="215" name="Objets" tilewidth="32" tileheight="32">
+  <image source="Objets.png" width="320" height="320"/>
+  <tile id="0">
+   <properties>
+    <property name="Name" value="Circle2"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Name" value="Circle1"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="Name" value="chest"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="Name" value="chest"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Ground" width="12" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC0tnYGBIxYIzgTgUCy4H4lIsuBKH+nYgbsWCO3GoDwNiVyw4hIB6byD2AWJfItVHA3EMEMcSqT4biHOAOJdI9cS6H4TdkNS54FGHzQ585oJwOhCnIalPwRHfsDgHxW8ZkvoSHPENi3NQ/LYhqW/BEd+wOMcVPrjCbLipnwfE86F4ARHq9wHxfig+MAjcP9Dq8aV1WuYjUtSD8lwqA2a+I1Smouc7QmUqer4bLVMJYwCdNMWg8AYAAA==
+  </data>
+ </layer>
+ <layer name="Fringe" width="12" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGLngxkA7gEwQBsSuUBxChPo0JPUpRKgvQ1JfQoT6I0jqjxGhfhSMgqEIRvMdYXB9oB1AAAAAl50vOfAGAAA=
+  </data>
+ </layer>
+ <layer name="Door" width="12" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAVDDZxDw4NB/VkopoX5o2AUDAYwmu+GPgAAroefDfAGAAA=
+  </data>
+ </layer>
+ <layer name="Over" width="12" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAXUBJ5AHInEDwfiCCD2GhjngIEn1A20dMdRKB4Fo4AUgJw20TF6PhrIPEQOGM131AG40gg5YQoA0mHDMvAGAAA=
+  </data>
+ </layer>
+ <layer name="set" width="12" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NlYGBgHWSYEQsmpF4RCROr3ohE9aSYT4r7WUlQN1jVqwKxGgXxiy/MhpN6ZjRMbfWDzb+0UD+U8sVgyXekhidIXpGB9DLVikT1pJhPTnpAxwCC8rVt8AYAAA==
+  </data>
+ </layer>
+ <layer name="Collision" width="12" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACzvEwMBwaJBhbGA4qz9EgrrhoJ5YMBzV4wsLaqgn1T1DUf1QSeeDST02MJzV48IAo1IcEfAGAAA=
+  </data>
+ </layer>
+ <layer name="Sight" width="12" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACzvEwMBwaJBhbGA4qz9EgrrhoJ5YMKp+VD029UMlnQ8m9djAcFaPCwMAAdTkePAGAAA=
+  </data>
+ </layer>
+ <layer name="Error" width="12" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwCoY/AAAtkzO78AYAAA==
+  </data>
+ </layer>
+</map>
