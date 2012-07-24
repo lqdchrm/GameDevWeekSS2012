@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 
+import org.newdawn.slick.Graphics;
+
 import de.fhtrier.gdw2.sotf.network.INetworkComp;
 import de.fhtrier.gdw2.sotf.network.datagrams.Datagram;
 import de.fhtrier.gdw2.sotf.network.datagrams.DatagramFactory;
@@ -35,7 +37,8 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 	}
 	
 	public void handleIncoming() {
-		for (Datagram d : client.incomingMessages) {
+		while (!client.incomingMessages.isEmpty()) {
+			Datagram d = client.incomingMessages.poll();
 			switch(d.getId()) {
 			case INetworkComp.MessageType.PLAYER_POSITION:
 				handleServerPlayerPos((PlayerPositionDatagram)d);
@@ -50,6 +53,15 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 		}
 	}
 
+	@Override
+	public void render(Graphics g) {
+		StringBuffer buf = new StringBuffer();
+		buf.append(client.getPlayerId() + ": in - " + client.incomingMessages.size() + " out - " + client.outgoingMessages.size() + "\n"); 
+		
+		g.drawString(buf.toString(), 20, 0);
+
+	}
+	
 	private void handlePlayerId(IDDatagram d) {
 		world.playerid = d.playerid;
 	}

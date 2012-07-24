@@ -1,5 +1,7 @@
 package de.fhtrier.gdw2.sotf.network;
 
+import org.newdawn.slick.Graphics;
+
 public interface INetworkComp {
 
 	public static class MessageType {
@@ -11,4 +13,6 @@ public interface INetworkComp {
 	void handleIncoming();
 	
 	void handleOutgoing();
+	
+	void render(Graphics g);
 }

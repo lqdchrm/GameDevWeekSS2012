@@ -1,5 +1,7 @@
 package de.fhtrier.gdw2.sotf.network.server;
 
+import org.newdawn.slick.Graphics;
+
 import de.fhtrier.gdw2.sotf.network.INetworkComp;
 import de.fhtrier.gdw2.sotf.network.client.ClientHandler;
 import de.fhtrier.gdw2.sotf.network.datagrams.Datagram;
@@ -47,6 +49,17 @@ public class ServerNetworkComp implements INetworkComp {
 			sendPlayerPosition(ch);
 			ch.sendPendingMessages();
 		}
+	}
+
+	@Override
+	public void render(Graphics g) {
+		StringBuffer buf = new StringBuffer();
+		for (int i=0; i<server.clientHandlers.size(); ++i) {
+			ClientHandler ch = server.clientHandlers.get(i);
+			buf.append(ch.getPlayerId() + ": in - " + ch.incomingMessages.size() + " out - " + ch.outgoingMessages.size() + "\n"); 
+		}
+		
+		g.drawString(buf.toString(), 20, 0);
 	}
 	
 	private void sendPlayerPosition(ClientHandler ch) {

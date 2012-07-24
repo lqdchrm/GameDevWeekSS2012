@@ -1,6 +1,7 @@
 package de.fhtrier.gdw2.sotf.game;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -33,6 +34,14 @@ public abstract class AbstractGameBase extends StateBasedGame {
 		networkComp = createNetworkComp(worldState);
 					
 		addState(new PlayingState(worldState));
+	}
+	
+	@Override
+	protected void postRenderState(GameContainer container, Graphics g)
+			throws SlickException {
+		super.postRenderState(container, g);
+		
+		networkComp.render(g);
 	}
 	
 	public abstract INetworkComp createNetworkComp(WorldState worldState);
