@@ -29,6 +29,6 @@ public class ClientGame extends AbstractGameBase {
 
 	@Override
 	public INetworkComp createNetworkComp(WorldState worldState) {
-		return new ClientNetworkComp(worldState, "localhost", 49999);
+		return new ClientNetworkComp(worldState, "143.93.55.178", 49999);
 	}
 }

@@ -12,7 +12,7 @@ public class Datagram {
 	public Datagram(byte id, int size)
 	{
 		this.id = id;
-		this.buffer = ByteBuffer.allocate(size);
+		this.buffer = ByteBuffer.allocate(size+1);
 	}
 	
 	public int getId() { return id; }
@@ -25,6 +25,8 @@ public class Datagram {
 			channel.read(buffer);
 		}
 		buffer.flip();
+		int _id = buffer.get();
+		assert(_id == id);
 	}
 	
 	public void writeToSocketChannel(SocketChannel channel) throws IOException

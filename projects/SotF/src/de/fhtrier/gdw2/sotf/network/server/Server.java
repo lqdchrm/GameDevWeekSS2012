@@ -6,7 +6,10 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 
+import de.fhtrier.gdw2.sotf.network.INetworkComp;
 import de.fhtrier.gdw2.sotf.network.client.ClientHandler;
+import de.fhtrier.gdw2.sotf.network.datagrams.DatagramFactory;
+import de.fhtrier.gdw2.sotf.network.datagrams.IDDatagram;
 import de.fhtrier.gdw2.sotf.network.notifications.INetworkEventListener;
 import de.fhtrier.gdw2.sotf.network.notifications.NetworkEvent;
 
@@ -38,7 +41,9 @@ public class Server extends Thread implements INetworkEventListener {
 				ClientHandler client = new ClientHandler(incomingChannel, clientHandlers.size()); 
 				client.add(this);
 				clientHandlers.add(client);
-				
+				IDDatagram datagram = (IDDatagram)DatagramFactory.getDatagram(INetworkComp.MessageType.PLAYER_ID);
+				datagram.playerid = client.getPlayerId();
+				client.outgoingMessages.add(datagram);
 			} catch (IOException e) {
 				handleAcceptFailed();
 			}

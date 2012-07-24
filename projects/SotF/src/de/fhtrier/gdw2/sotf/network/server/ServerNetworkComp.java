@@ -22,21 +22,21 @@ public class ServerNetworkComp implements INetworkComp {
 		if (server != null) {
 			for(int i=0; i<server.clientHandlers.size(); ++i) {
 				ClientHandler ch = server.clientHandlers.get(i);
-				handleMessagesFromClient(i, ch);
+				handleMessagesFromClient(ch);
 			}
 		}
 	}
 
-	private void handleMessagesFromClient(int client, ClientHandler ch) {
+	private void handleMessagesFromClient(ClientHandler ch) {
 		while(!ch.incomingMessages.isEmpty()) {
 			Datagram d = ch.incomingMessages.poll();
 
 			switch(d.getId()) {
 				case INetworkComp.MessageType.PLAYER_POSITION:
-					handleClientPlayerPosition(client, ch, (PlayerPositionDatagram)d);
+					handleClientPlayerPosition(ch, (PlayerPositionDatagram)d);
 					break;
 				default:
-					System.err.println("Unknown MessageType");
+					System.err.println("Server: Unknown MessageType: " + d.getId());
 					break;
 			}
 		}
@@ -58,9 +58,10 @@ public class ServerNetworkComp implements INetworkComp {
 		ch.outgoingMessages.add(d);
 	}
 
-	private void handleClientPlayerPosition(int client, ClientHandler ch, PlayerPositionDatagram d)
+	private void handleClientPlayerPosition(ClientHandler ch, PlayerPositionDatagram d)
 	{
-		world.entities[client].position.x = d.data[client].x;
-		world.entities[client].position.y = d.data[client].y;
+		int playerid = ch.getPlayerId();
+		world.entities[playerid].position.x = d.data[playerid].x;
+		world.entities[playerid].position.y = d.data[playerid].y;
 	}
 }

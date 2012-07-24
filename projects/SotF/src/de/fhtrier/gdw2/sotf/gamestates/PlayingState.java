@@ -7,13 +7,14 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import de.fhtrier.gdw2.sotf.interfaces.IEntity;
+import de.fhtrier.gdw2.sotf.network.states.WorldState;
 
 public class PlayingState extends BasicGameState {
 
-	IEntity[] entities;
+	WorldState worldState;
 		
-	public PlayingState(IEntity[] entities) {
-		this.entities = entities;
+	public PlayingState(WorldState worldState) {
+		this.worldState = worldState;
 	}
 	
 	@Override
@@ -25,15 +26,16 @@ public class PlayingState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 	
-		for(IEntity e : entities)
+		for(IEntity e : worldState.entities)
 			e.render(g);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		for (IEntity e : entities)
-			e.update(delta);
+		if (worldState.playerid > -1) {
+			worldState.entities[worldState.playerid].update(delta);
+		}
 	}
 
 	@Override

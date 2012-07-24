@@ -7,6 +7,8 @@ public class DatagramFactory {
 		switch(id) {
 			case INetworkComp.MessageType.PLAYER_POSITION:
 				return new PlayerPositionDatagram();
+			case INetworkComp.MessageType.PLAYER_ID:
+				return new IDDatagram();
 			default:
 				throw new IllegalArgumentException("id: " + id);
 		}

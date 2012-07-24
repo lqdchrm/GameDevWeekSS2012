@@ -6,6 +6,7 @@ import de.fhtrier.gdw2.sotf.impl.Entity;
 
 public class WorldState {
 	public Entity[] entities;
+	public int playerid;
 	
 	public WorldState(GameContainer container) {
 		entities = new Entity[8];
@@ -13,5 +14,6 @@ public class WorldState {
 			entities[i] = new Entity(container);
 		
 		}
+		playerid = 0;
 	}
 }

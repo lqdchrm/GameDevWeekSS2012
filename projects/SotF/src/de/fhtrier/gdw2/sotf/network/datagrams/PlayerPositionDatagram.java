@@ -10,7 +10,7 @@ import de.fhtrier.gdw2.sotf.network.INetworkComp;
 
 public class PlayerPositionDatagram extends Datagram {
 
-	private static final int size = 1 + 8*2*4; 
+	private static final int size = 8*2*4; 
 	public Vector2f[] data = new Vector2f[8];
 	
 	PlayerPositionDatagram() {
@@ -24,9 +24,6 @@ public class PlayerPositionDatagram extends Datagram {
 	@Override
 	public void readFromSocketChannel(SocketChannel channel) throws IOException {
 		super.readFromSocketChannel(channel);
-		
-		int _id = buffer.get();
-		assert(_id == id);
 		
 		FloatBuffer _buffer = buffer.asFloatBuffer();
 		for (int i=0; i<8; ++i) {

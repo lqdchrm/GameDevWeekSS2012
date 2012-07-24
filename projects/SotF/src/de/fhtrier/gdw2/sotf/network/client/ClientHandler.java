@@ -90,4 +90,8 @@ public class ClientHandler extends Thread {
 				l.HandleNetworkEvent(this, event);
 		}
 	}
+
+	public int getPlayerId() {
+		return getNum() + 1;
+	}
 }

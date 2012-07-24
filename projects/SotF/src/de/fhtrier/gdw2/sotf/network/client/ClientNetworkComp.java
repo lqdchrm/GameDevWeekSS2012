@@ -7,6 +7,7 @@ import java.nio.channels.SocketChannel;
 import de.fhtrier.gdw2.sotf.network.INetworkComp;
 import de.fhtrier.gdw2.sotf.network.datagrams.Datagram;
 import de.fhtrier.gdw2.sotf.network.datagrams.DatagramFactory;
+import de.fhtrier.gdw2.sotf.network.datagrams.IDDatagram;
 import de.fhtrier.gdw2.sotf.network.datagrams.PlayerPositionDatagram;
 import de.fhtrier.gdw2.sotf.network.notifications.INetworkEventListener;
 import de.fhtrier.gdw2.sotf.network.notifications.NetworkEvent;
@@ -39,15 +40,23 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 			case INetworkComp.MessageType.PLAYER_POSITION:
 				handleServerPlayerPos((PlayerPositionDatagram)d);
 				break;
+			case INetworkComp.MessageType.PLAYER_ID:
+				handlePlayerId((IDDatagram)d);
+				break;
 			default:
-				System.err.println("Unknown MessageType");
+				System.err.println("Unknown MessageType: " + d.getId());
 				break;
 			}
 		}
 	}
 
+	private void handlePlayerId(IDDatagram d) {
+		world.playerid = d.playerid;
+	}
+
 	private void handleServerPlayerPos(PlayerPositionDatagram d) {
 		for (int i=0; i<8; ++i) {
+			if (i == world.playerid) continue;
 			world.entities[i].position.x = d.data[i].x;
 			world.entities[i].position.y = d.data[i].y;
 		}
