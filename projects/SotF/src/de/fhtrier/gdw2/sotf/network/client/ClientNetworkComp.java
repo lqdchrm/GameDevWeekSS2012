@@ -38,8 +38,8 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 	}
 	
 	public void handleIncoming() {
-		while (!client.incomingMessages.isEmpty()) {
-			Datagram d = client.incomingMessages.poll();
+		while (client.hasIncomingMessages()) {
+			Datagram d = client.getNextIncomingMessage();
 			switch(d.getId()) {
 			case INetworkComp.MessageType.PLAYER_POSITION:
 				handleServerPlayerPos((PlayerPositionDatagram)d);
@@ -57,7 +57,7 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 	@Override
 	public void render(Graphics g) {
 		StringBuffer buf = new StringBuffer();
-		buf.append(client.getPlayerId() + ": in - " + client.incomingMessages.size() + " out - " + client.outgoingMessages.size() + "\n"); 
+		buf.append(client.getPlayerId() + ": in - " + client.numIncomingMessages() + " out - " + client.numOutgoingMessages() + "\n"); 
 		
 		g.drawString(buf.toString(), 20, 0);
 
@@ -82,7 +82,7 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 			d.data[i].x = world.entities[i].position.x;
 			d.data[i].y = world.entities[i].position.y;
 		}
-		client.outgoingMessages.add(d);
+		client.addOutgoingMessage(d);
 		client.sendPendingMessages();	
 	}
 

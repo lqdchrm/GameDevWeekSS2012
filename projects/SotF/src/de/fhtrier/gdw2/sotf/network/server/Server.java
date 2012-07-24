@@ -45,7 +45,7 @@ public class Server extends Thread implements INetworkEventListener {
 					clientHandlers.add(client);
 					IDDatagram datagram = (IDDatagram)DatagramFactory.getDatagram(INetworkComp.MessageType.PLAYER_ID);
 					datagram.playerid = client.getPlayerId();
-					client.outgoingMessages.add(datagram);
+					client.addOutgoingMessage(datagram);
 				} else {
 					// TODO inform client that server is full
 				}

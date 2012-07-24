@@ -19,8 +19,8 @@ public class ClientHandler extends Thread {
 	private boolean running = true;
 	private int num;
 
-	public ConcurrentLinkedQueue<Datagram> incomingMessages = new ConcurrentLinkedQueue<>();
-	public ConcurrentLinkedQueue<Datagram> outgoingMessages = new ConcurrentLinkedQueue<>();
+	private ConcurrentLinkedQueue<Datagram> incomingMessages = new ConcurrentLinkedQueue<>();
+	private ConcurrentLinkedQueue<Datagram> outgoingMessages = new ConcurrentLinkedQueue<>();
 	
 	private List<INetworkEventListener> networkEventListeners = new ArrayList<>();
 	private ByteBuffer idBuffer = ByteBuffer.allocate(1);
@@ -54,6 +54,14 @@ public class ClientHandler extends Thread {
 			}
 		}
 	}
+
+	public boolean hasIncomingMessages() { return !incomingMessages.isEmpty(); }
+	public int numIncomingMessages() { return incomingMessages.size(); }
+	public Datagram getNextIncomingMessage() { return incomingMessages.poll(); }
+	
+	public boolean hasOutgoingMessages() { return !outgoingMessages.isEmpty(); }
+	public int numOutgoingMessages() { return outgoingMessages.size(); }
+	public boolean addOutgoingMessage(Datagram d) { if (running) { outgoingMessages.add(d); } return running; }
 
 	public void sendPendingMessages()
 	{

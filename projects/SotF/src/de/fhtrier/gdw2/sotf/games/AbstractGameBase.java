@@ -1,4 +1,4 @@
-package de.fhtrier.gdw2.sotf.game;
+package de.fhtrier.gdw2.sotf.games;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -54,10 +54,10 @@ public abstract class AbstractGameBase extends StateBasedGame {
 		ip = "localhost";
 	 	port = 49999;
 	 
-	 	if (args.length > 0) {
-	 		ip = args[0];
-	 		if (args.length > 1) {
-	 			port = Integer.parseInt(args[1]);
+	 	if (args.length > 1) {
+	 		ip = args[1];
+	 		if (args.length > 2) {
+	 			port = Integer.parseInt(args[2]);
 	 		}
 	 	}
 	}
