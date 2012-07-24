@@ -10,10 +10,10 @@ import de.fhtrier.gdw2.sotf.interfaces.IEntity;
 
 public class PlayingState extends BasicGameState {
 
-	IEntity entity;
+	IEntity[] entities;
 		
-	public PlayingState(IEntity entity) {
-		this.entity = entity;
+	public PlayingState(IEntity[] entities) {
+		this.entities = entities;
 	}
 	
 	@Override
@@ -25,13 +25,15 @@ public class PlayingState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 	
-		entity.render(g);
+		for(IEntity e : entities)
+			e.render(g);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		entity.update(delta);
+		for (IEntity e : entities)
+			e.update(delta);
 	}
 
 	@Override

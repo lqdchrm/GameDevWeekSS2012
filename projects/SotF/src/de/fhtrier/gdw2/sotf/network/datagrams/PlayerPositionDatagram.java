@@ -4,16 +4,21 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.channels.SocketChannel;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import de.fhtrier.gdw2.sotf.network.INetworkComp;
 
 public class PlayerPositionDatagram extends Datagram {
 
-	private static final int size = 9; 
-	public float x;
-	public float y;
+	private static final int size = 1 + 8*2*4; 
+	public Vector2f[] data = new Vector2f[8];
 	
 	PlayerPositionDatagram() {
 		super(INetworkComp.MessageType.PLAYER_POSITION, size);
+		
+		for(int i=0; i<8; ++i) {
+			data[i] = new Vector2f(0,0);
+		}
 	}
 
 	@Override
@@ -24,16 +29,21 @@ public class PlayerPositionDatagram extends Datagram {
 		assert(_id == id);
 		
 		FloatBuffer _buffer = buffer.asFloatBuffer();
-		x = _buffer.get();
-		y = _buffer.get();
+		for (int i=0; i<8; ++i) {
+			data[i].x = _buffer.get();
+			data[i].y = _buffer.get();
+		}
 	}
 
 	@Override
 	public void writeToSocketChannel(SocketChannel channel) throws IOException {
 		buffer.clear();
 		buffer.put(id);
-		buffer.putFloat(x);
-		buffer.putFloat(y);
+
+		for (int i=0; i<8; ++i) {
+			buffer.putFloat(data[i].x);
+			buffer.putFloat(data[i].y);
+		}
 		
 		super.writeToSocketChannel(channel);
 	}

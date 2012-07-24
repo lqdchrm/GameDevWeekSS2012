@@ -6,6 +6,8 @@ public interface INetworkComp {
 		public static final byte WORLD = 0;
 		public static final byte PLAYER_POSITION = 1;
 	}
+	
 	void handleIncoming();
+	
 	void handleOutgoing();
 }

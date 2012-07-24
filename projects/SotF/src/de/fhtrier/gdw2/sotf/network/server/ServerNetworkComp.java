@@ -1,8 +1,11 @@
-package de.fhtrier.gdw2.sotf.network;
+package de.fhtrier.gdw2.sotf.network.server;
 
+import de.fhtrier.gdw2.sotf.network.INetworkComp;
+import de.fhtrier.gdw2.sotf.network.client.ClientHandler;
 import de.fhtrier.gdw2.sotf.network.datagrams.Datagram;
 import de.fhtrier.gdw2.sotf.network.datagrams.DatagramFactory;
 import de.fhtrier.gdw2.sotf.network.datagrams.PlayerPositionDatagram;
+import de.fhtrier.gdw2.sotf.network.states.WorldState;
 
 
 public class ServerNetworkComp implements INetworkComp {
@@ -17,19 +20,20 @@ public class ServerNetworkComp implements INetworkComp {
 	
 	public void handleIncoming() {
 		if (server != null) {
-			for(ClientHandler ch : server.clientHandlers) {
-				handleMessagesFromClient(ch);
+			for(int i=0; i<server.clientHandlers.size(); ++i) {
+				ClientHandler ch = server.clientHandlers.get(i);
+				handleMessagesFromClient(i, ch);
 			}
 		}
 	}
 
-	private void handleMessagesFromClient(ClientHandler ch) {
+	private void handleMessagesFromClient(int client, ClientHandler ch) {
 		while(!ch.incomingMessages.isEmpty()) {
 			Datagram d = ch.incomingMessages.poll();
 
 			switch(d.getId()) {
 				case INetworkComp.MessageType.PLAYER_POSITION:
-					handleClientPlayerPosition(ch, (PlayerPositionDatagram)d);
+					handleClientPlayerPosition(client, ch, (PlayerPositionDatagram)d);
 					break;
 				default:
 					System.err.println("Unknown MessageType");
@@ -47,14 +51,16 @@ public class ServerNetworkComp implements INetworkComp {
 	
 	private void sendPlayerPosition(ClientHandler ch) {
 		PlayerPositionDatagram d = (PlayerPositionDatagram)DatagramFactory.getDatagram(INetworkComp.MessageType.PLAYER_POSITION);
-		d.x = world.entity.position.x;
-		d.y = world.entity.position.y;
+		for (int i=0; i<8; ++i) {
+			d.data[i].x = world.entities[i].position.x;
+			d.data[i].y = world.entities[i].position.y;
+		}
 		ch.outgoingMessages.add(d);
 	}
 
-	private void handleClientPlayerPosition(ClientHandler ch, PlayerPositionDatagram d)
+	private void handleClientPlayerPosition(int client, ClientHandler ch, PlayerPositionDatagram d)
 	{
-		world.entity.position.x = d.x;
-		world.entity.position.y = d.y;
+		world.entities[client].position.x = d.data[client].x;
+		world.entities[client].position.y = d.data[client].y;
 	}
 }
