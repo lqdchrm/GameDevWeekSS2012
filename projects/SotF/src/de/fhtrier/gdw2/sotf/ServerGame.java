@@ -29,7 +29,7 @@ public class ServerGame extends AbstractGameBase {
 
 	@Override
 	public INetworkComp createNetworkComp(WorldState worldState) {
-		return new ServerNetworkComp(worldState, "143.93.55.178", 49999);
+		return new ServerNetworkComp(worldState, "143.93.55.175", 49999);
 	}
 
 }
