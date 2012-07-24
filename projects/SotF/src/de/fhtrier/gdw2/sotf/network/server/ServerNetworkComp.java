@@ -8,6 +8,7 @@ import de.fhtrier.gdw2.sotf.network.datagrams.Datagram;
 import de.fhtrier.gdw2.sotf.network.datagrams.DatagramFactory;
 import de.fhtrier.gdw2.sotf.network.datagrams.PlayerPositionDatagram;
 import de.fhtrier.gdw2.sotf.network.states.WorldState;
+import de.fhtrier.gdw2.sotf.settings.GlobalSettings;
 
 
 public class ServerNetworkComp implements INetworkComp {
@@ -64,7 +65,7 @@ public class ServerNetworkComp implements INetworkComp {
 	
 	private void sendPlayerPosition(ClientHandler ch) {
 		PlayerPositionDatagram d = (PlayerPositionDatagram)DatagramFactory.getDatagram(INetworkComp.MessageType.PLAYER_POSITION);
-		for (int i=0; i<8; ++i) {
+		for (int i=0; i<GlobalSettings.MAX_PLAYERS; ++i) {
 			d.data[i].x = world.entities[i].position.x;
 			d.data[i].y = world.entities[i].position.y;
 		}

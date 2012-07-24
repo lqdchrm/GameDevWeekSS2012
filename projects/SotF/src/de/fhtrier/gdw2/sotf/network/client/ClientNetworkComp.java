@@ -14,6 +14,7 @@ import de.fhtrier.gdw2.sotf.network.datagrams.PlayerPositionDatagram;
 import de.fhtrier.gdw2.sotf.network.notifications.INetworkEventListener;
 import de.fhtrier.gdw2.sotf.network.notifications.NetworkEvent;
 import de.fhtrier.gdw2.sotf.network.states.WorldState;
+import de.fhtrier.gdw2.sotf.settings.GlobalSettings;
 
 
 public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
@@ -67,7 +68,7 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 	}
 
 	private void handleServerPlayerPos(PlayerPositionDatagram d) {
-		for (int i=0; i<8; ++i) {
+		for (int i=0; i<GlobalSettings.MAX_PLAYERS; ++i) {
 			if (i == world.playerid) continue;
 			world.entities[i].position.x = d.data[i].x;
 			world.entities[i].position.y = d.data[i].y;
@@ -77,7 +78,7 @@ public class ClientNetworkComp implements INetworkComp, INetworkEventListener {
 	public void handleOutgoing() {
 		PlayerPositionDatagram d = (PlayerPositionDatagram)DatagramFactory.getDatagram(INetworkComp.MessageType.PLAYER_POSITION);
 		
-		for (int i=0; i<8; ++i) {
+		for (int i=0; i<GlobalSettings.MAX_PLAYERS; ++i) {
 			d.data[i].x = world.entities[i].position.x;
 			d.data[i].y = world.entities[i].position.y;
 		}

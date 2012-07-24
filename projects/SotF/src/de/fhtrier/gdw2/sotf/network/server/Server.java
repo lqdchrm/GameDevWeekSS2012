@@ -12,6 +12,7 @@ import de.fhtrier.gdw2.sotf.network.datagrams.DatagramFactory;
 import de.fhtrier.gdw2.sotf.network.datagrams.IDDatagram;
 import de.fhtrier.gdw2.sotf.network.notifications.INetworkEventListener;
 import de.fhtrier.gdw2.sotf.network.notifications.NetworkEvent;
+import de.fhtrier.gdw2.sotf.settings.GlobalSettings;
 
 public class Server extends Thread implements INetworkEventListener {
 
@@ -38,12 +39,16 @@ public class Server extends Thread implements INetworkEventListener {
 		while(running) {
 			try {
 				SocketChannel incomingChannel = serverChannel.accept();
-				ClientHandler client = new ClientHandler(incomingChannel, clientHandlers.size()); 
-				client.add(this);
-				clientHandlers.add(client);
-				IDDatagram datagram = (IDDatagram)DatagramFactory.getDatagram(INetworkComp.MessageType.PLAYER_ID);
-				datagram.playerid = client.getPlayerId();
-				client.outgoingMessages.add(datagram);
+				if (clientHandlers.size() < GlobalSettings.MAX_PLAYERS) {
+					ClientHandler client = new ClientHandler(incomingChannel, clientHandlers.size()); 
+					client.add(this);
+					clientHandlers.add(client);
+					IDDatagram datagram = (IDDatagram)DatagramFactory.getDatagram(INetworkComp.MessageType.PLAYER_ID);
+					datagram.playerid = client.getPlayerId();
+					client.outgoingMessages.add(datagram);
+				} else {
+					// TODO inform client that server is full
+				}
 			} catch (IOException e) {
 				handleAcceptFailed();
 			}
