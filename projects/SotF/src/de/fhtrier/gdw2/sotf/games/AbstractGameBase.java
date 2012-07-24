@@ -2,6 +2,7 @@ package de.fhtrier.gdw2.sotf.games;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -30,6 +31,11 @@ public abstract class AbstractGameBase extends StateBasedGame {
 	@Override
 	protected void postUpdateState(GameContainer container, int delta) throws SlickException {
 		networkComp.handleOutgoing();
+		
+		Input input = container.getInput();
+		if (input.isKeyPressed(Input.KEY_ESCAPE)) {
+			container.exit();
+		}
 	}
 	
 	@Override
