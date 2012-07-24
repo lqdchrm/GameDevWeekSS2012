@@ -11,8 +11,8 @@ import de.fhtrier.gdw2.sotf.network.states.WorldState;
 public class ServerGame extends AbstractGameBase {
 
 	public static void main(String[] args) {
-		 try {
-	            AppGameContainer app = new AppGameContainer(new ServerGame());
+		 try { 	
+	            AppGameContainer app = new AppGameContainer(new ServerGame(args));
 	            app.setTargetFrameRate(60);
 	            app.setVSync(true);
 	            app.setDisplayMode(800, 600, false);
@@ -23,13 +23,13 @@ public class ServerGame extends AbstractGameBase {
 	        }		
 	}
 		
-	public ServerGame() {
-		super("SurvivalOfTheFattest - Server");
+	public ServerGame(String[] args) {
+		super("SurvivalOfTheFattest - Server", args);
 	}
 
 	@Override
-	public INetworkComp createNetworkComp(WorldState worldState) {
-		return new ServerNetworkComp(worldState, "143.93.55.175", 49999);
+	public INetworkComp createNetworkComp(WorldState worldState, String ip, int port) {
+		return new ServerNetworkComp(worldState, ip, port);
 	}
 
 }

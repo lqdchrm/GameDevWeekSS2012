@@ -12,7 +12,7 @@ public class ClientGame extends AbstractGameBase {
 
 	public static void main(String[] args) {
 		 try {
-	            AppGameContainer app = new AppGameContainer(new ClientGame());
+	            AppGameContainer app = new AppGameContainer(new ClientGame(args));
 	            app.setTargetFrameRate(60);
 	            app.setVSync(true);
 	            app.setDisplayMode(800, 600, false);
@@ -23,12 +23,12 @@ public class ClientGame extends AbstractGameBase {
 	        }		
 	}
 	
-	public ClientGame() {
-		super("SurvivalOfTheFattest - Client");
+	public ClientGame(String[] args) {
+		super("SurvivalOfTheFattest - Client", args);
 	}
 
 	@Override
-	public INetworkComp createNetworkComp(WorldState worldState) {
-		return new ClientNetworkComp(worldState, "143.93.55.175", 49999);
+	public INetworkComp createNetworkComp(WorldState worldState, String ip, int port) {
+		return new ClientNetworkComp(worldState, ip, port);
 	}
 }

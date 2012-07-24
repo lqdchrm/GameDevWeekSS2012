@@ -13,9 +13,13 @@ public abstract class AbstractGameBase extends StateBasedGame {
 
 	public INetworkComp networkComp;
 	private WorldState worldState;
-		
-	public AbstractGameBase(String title) {
+	private String ip;
+	private int port;
+	
+	
+	public AbstractGameBase(String title, String[] args) {
 		super(title);
+	 	parseIP(args);
 	}
 
 	@Override
@@ -31,7 +35,7 @@ public abstract class AbstractGameBase extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		worldState = new WorldState(container);
-		networkComp = createNetworkComp(worldState);
+		networkComp = createNetworkComp(worldState, ip, port);
 					
 		addState(new PlayingState(worldState));
 	}
@@ -44,5 +48,17 @@ public abstract class AbstractGameBase extends StateBasedGame {
 		networkComp.render(g);
 	}
 	
-	public abstract INetworkComp createNetworkComp(WorldState worldState);
+	public abstract INetworkComp createNetworkComp(WorldState worldState, String ip, int port);
+
+	private void parseIP(String[] args) {
+		ip = "localhost";
+	 	port = 49999;
+	 
+	 	if (args.length > 0) {
+	 		ip = args[0];
+	 		if (args.length > 1) {
+	 			port = Integer.parseInt(args[1]);
+	 		}
+	 	}
+	}
 }
