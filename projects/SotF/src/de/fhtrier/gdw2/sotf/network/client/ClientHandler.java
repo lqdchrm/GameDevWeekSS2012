@@ -1,6 +1,7 @@
 package de.fhtrier.gdw2.sotf.network.client;
 
 import java.io.IOException;
+import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
@@ -24,11 +25,12 @@ public class ClientHandler extends Thread {
 	private List<INetworkEventListener> networkEventListeners = new ArrayList<>();
 	private ByteBuffer idBuffer = ByteBuffer.allocate(1);
 	
-	public ClientHandler(SocketChannel communicationChannel) {
+	public ClientHandler(SocketChannel communicationChannel) throws IOException {
 		this(communicationChannel, 0);
 	}
 	
-	public ClientHandler(SocketChannel communicationChannel, int num){
+	public ClientHandler(SocketChannel communicationChannel, int num) throws IOException{
+		communicationChannel.setOption(StandardSocketOptions.TCP_NODELAY, true);
 		this.communicationChannel = communicationChannel;
 		this.num = num;
 		start();
